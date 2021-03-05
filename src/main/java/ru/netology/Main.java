@@ -10,7 +10,7 @@ public class Main {
             count++;
             new Thread(showroom::sellCar, "Customer" + count).start();
             new Thread(showroom::createCar, "Manufacturer" + count).start();
-            if (count == 4) {
+            if (count == 3) {
                 break;
             }
         }

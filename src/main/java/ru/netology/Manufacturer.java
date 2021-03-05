@@ -9,11 +9,13 @@ public class Manufacturer {
     private static final long ACCEPTANCE_OF_CAR = 2;
     public static final int SOLD_CAR = 1;
     private final Showroom showroom;
-    private final Lock lock = new ReentrantLock();
-//    private final Condition = new Condition();
+    Lock lock;
+    Condition condition;
 
     public Manufacturer(Showroom showroom) {
         this.showroom = showroom;
+        lock = new ReentrantLock();
+        condition = lock.newCondition();
     }
 
     public Car sellCar() {
@@ -22,7 +24,7 @@ public class Manufacturer {
             System.out.println(Thread.currentThread().getName() + " : Buy the car.");
             while (showroom.getCars().size() == 0) {
                 System.out.println(Thread.currentThread().getName() + ": No Car in the showroom.");
-                lock.newCondition().await();
+                condition.await();
             }
             TimeUnit.SECONDS.sleep(SOLD_CAR);
             System.out.println(Thread.currentThread().getName() + ": Car bought");
@@ -42,7 +44,7 @@ public class Manufacturer {
             TimeUnit.SECONDS.sleep(ACCEPTANCE_OF_CAR);
             showroom.getCars().add(new Car());
             System.out.println(Thread.currentThread().getName() + ": Car created.");
-            lock.newCondition().signal();
+            condition.signal();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
