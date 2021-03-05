@@ -18,4 +18,8 @@ public class Showroom {
     List<Car> getCars() {
         return cars;
     }
+
+    public int size() {
+        return cars.size();
+    }
 }

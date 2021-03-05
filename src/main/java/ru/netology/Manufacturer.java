@@ -33,7 +33,7 @@ public class Manufacturer {
         } finally {
             lock.unlock();
         }
-        return showroom.getCars().remove(0);
+        return showroom.getCars().remove(showroom.size() - 1);
     }
 
     public void createCar() {
