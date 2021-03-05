@@ -14,7 +14,7 @@ public class Manufacturer {
 
     public Manufacturer(Showroom showroom) {
         this.showroom = showroom;
-        lock = new ReentrantLock();
+        lock = new ReentrantLock(true);
         condition = lock.newCondition();
     }
 
@@ -31,7 +31,6 @@ public class Manufacturer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Unlock - " + Thread.currentThread().getName());
             lock.unlock();
         }
         return showroom.getCars().remove(0);
@@ -48,7 +47,6 @@ public class Manufacturer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Unlock - " + Thread.currentThread().getName());
             lock.unlock();
         }
     }
